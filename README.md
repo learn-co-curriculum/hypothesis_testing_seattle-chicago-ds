@@ -9,32 +9,12 @@
 4. Define and perform Z-tests
 5. Define and perform T-tests: 1 sample and 2 sample
 
-## Intuition for Hypothesis Testing Example
-
-![heads_or_tails](https://media.giphy.com/media/6jqfXikz9yzhS/giphy.gif)
-
-
-Jessi has recently claimed that her lucky quarter is actually distinctly different than every other kind of quarter. Due to the unique weight distribution from the quarter's design there is actually a greater chance for the quarter to land tails than other fair coins.
-
-Do we believe her?
-
-I sure don't. But lets be good data scientists and put this claim to the test.
-
-Let's flip the coin once and if it comes up tails then I'll change my mind.
-
-Would you change your mind?
-
-How many tails would I have to flip in order to convince you that this coin actual isn't fair? How many to know for sure that it isn't fair?
-
-What is a reasonable threshold to set?
-
 ## Scenarios
 
 - Chemistry - do inputs from two different barley fields produce different
 yields?
 - Astrophysics - do star systems with near-orbiting gas giants have hotter
 stars?
-- Economics - demography, surveys, etc.
 - Medicine - BMI vs. Hypertension, etc.
 - Business - which ad is more effective given engagement?
 
@@ -108,6 +88,8 @@ This serves as the foundation for hypothesis testing where we will reject or fai
 If we're testing the function of a new drug, then the null hypothesis will say that the drug has _no effect_ on patients, or anyway no effect relative to relief of the malady the drug was designed to combat. 
 
 If we're testing whether Peeps cause dementia, then the null hypothesis will say that there is _no correlation_ between Peeps consumption and rate of dementia development.
+
+![peeps](https://media.giphy.com/media/j3kh0AAZfeNP2/giphy.gif)
 
 # One tailed vs two tailed tests
 
@@ -306,8 +288,7 @@ px
 
 ![z](https://media.giphy.com/media/4oku9cpYuCNwc/giphy.gif)
 
-A z-test is used when you know the population mean and standard deviation. 
-A z-test determines the probability a sample mean,
+A z-test is used when you know the population mean and standard deviation.
 
 Our test statistic is the z-stat.
 
@@ -327,35 +308,11 @@ for a single data point $x$ is equal to a data point, $\mu$ equals the mean of t
 
 Because of this, we can say, with a z-score of approximately 2, our data point is 2 standard deviations from the mean, and therefore has a probability of appearing of 1-.95, or .05. 
 
-Example: Assume the mean height for women in the use is normally distributed with a mean of 65 inches and a standard deviation of 4 inches. What is the z-score of a woman who is 75 inches tall? 
+Yesterday, we performed the encountered the following example: Assume the mean height for women in the use is normally distributed with a mean of 65 inches and a standard deviation of 4 inches. What is the z-score of a woman who is 75 inches tall? 
     
 
 
 ```python
-# Code for me:
-
-mccalister = ['Adam', 'Amanda','Chum', 'Dann', 
- 'Jacob', 'Jason', 'Johnhoy', 'Karim', 
-'Leana','Luluva', 'Matt', 'Maximilian', ]
-
-new_choice = np.random.choice(mccalister)
-print(new_choice)
-mccalister.remove(new_choice)
-```
-
-    Luluva
-
-
-
-```python
-# your answer here
-
-```
-
-
-```python
-#__SOLUTION__
-# your answer here
 z_score = (75 - 65)/4
 print(z_score)
 ```
@@ -435,7 +392,7 @@ print(new_choice)
 mccalister.remove(new_choice)
 ```
 
-    Jason
+    Dann
 
 
 What is our null hypothesis?
@@ -494,17 +451,6 @@ np.random.normal(9000, 900, size = 40).mean()
 ```
 
 
-
-
-    [8973.860881641354,
-     9009.155824283625,
-     8970.390116280525,
-     9059.896989096258,
-     9170.496403788886]
-
-
-
-
 ```python
 #__SOLUTION__
 random_means = []
@@ -555,7 +501,7 @@ plt.show();
 ```
 
 
-![png](index_files/index_68_0.png)
+![png](index_files/index_66_0.png)
 
 
 
@@ -608,12 +554,12 @@ ax.fill_between(kde_x, kde_y, where=(kde_x<8637),
 
 
 
-    <matplotlib.collections.PolyCollection at 0x1a224ae6d8>
+    <matplotlib.collections.PolyCollection at 0x1a1ea7b278>
 
 
 
 
-![png](index_files/index_74_1.png)
+![png](index_files/index_72_1.png)
 
 
 
@@ -641,7 +587,7 @@ f"We expect the estimate to be off by {rmse: .2f} lbs on average."
 
     TypeError                                 Traceback (most recent call last)
 
-    <ipython-input-151-bb37eca2056d> in <module>
+    <ipython-input-83-bb37eca2056d> in <module>
           4     return None
           5 
     ----> 6 rmse = np.sqrt(mse(random_means, 9000))
@@ -666,6 +612,13 @@ rmse = np.sqrt(mse(random_means, 9000))
 f"We expect the estimate to be off by {rmse: .2f} lbs on average."
 
 ```
+
+
+
+
+    'We expect the estimate to be off by  141.34 lbs on average.'
+
+
 
 Remember we gave the formula for standard error before as $\frac{\sigma}{\sqrt{n}}$
 <br> Let's calculate that with our elephant numbers.
@@ -838,24 +791,27 @@ help(ttest_1samp)
         Parameters
         ----------
         a : array_like
-            sample observation
+            Sample observation.
         popmean : float or array_like
-            expected value in null hypothesis. If array_like, then it must have the
-            same shape as `a` excluding the axis dimension
+            Expected value in null hypothesis. If array_like, then it must have the
+            same shape as `a` excluding the axis dimension.
         axis : int or None, optional
             Axis along which to compute test. If None, compute over the whole
             array `a`.
         nan_policy : {'propagate', 'raise', 'omit'}, optional
-            Defines how to handle when input contains nan. 'propagate' returns nan,
-            'raise' throws an error, 'omit' performs the calculations ignoring nan
-            values. Default is 'propagate'.
+            Defines how to handle when input contains nan.
+            The following options are available (default is 'propagate'):
+        
+              * 'propagate': returns nan
+              * 'raise': throws an error
+              * 'omit': performs the calculations ignoring nan values
         
         Returns
         -------
         statistic : float or array
-            t-statistic
+            t-statistic.
         pvalue : float or array
-            two-tailed p-value
+            Two-sided p-value.
         
         Examples
         --------
@@ -895,18 +851,8 @@ Because the sample size is smaller, we will use a one sample t-test.
 
 ```python
 # here is the array of our weights
-gab = [8000, 8500, 8787, 9005, 8101, 
-8891, 7999, 9005, 8302, 8505, 
-8787, 8383, 9090, 8440, 9200, 
-8890, 8765, 9005, 8674, 8409]
-print(np.std(gab))
-print(np.mean(gab))
-
+gab = np.random.normal(8637, 355, 20)
 ```
-
-    355.2156950361287
-    8636.9
-
 
 
 ```python
@@ -953,7 +899,7 @@ ttest_1samp(gab, 9000)
 
 
 
-    Ttest_1sampResult(statistic=-4.455648296279936, pvalue=0.0002711592272563807)
+    Ttest_1sampResult(statistic=-7.372279171061301, pvalue=5.518287796649883e-07)
 
 
 
@@ -992,16 +938,19 @@ Now let's say we want to compare our Gabonese elephants to a sample of elephants
 
 
 ```python
-ken = [9101, 8510, 8787, 9005, 8101, 
-9100, 7900, 9005, 8302, 8505, 
-9200, 8383, 9090, 8440, 9110, 
-9300, 9200, 8901, 8701, 9308]
-print(np.mean(ken))
+ken = [8762,8880,8743,8901,
+        8252,8966,8369,9001,
+         8857,8147,8927,9005,
+         9083,8477,8760,8915,
+         8927,8829,8579,9002]
+
+
 print(np.std(ken))
+print(np.std(gab))
 ```
 
-    8797.45
-    407.0733932597413
+    259.79701691897856
+    260.90483884150007
 
 
 
@@ -1021,19 +970,31 @@ t
 ```
 
 
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-154-086847d76736> in <module>
-          1 # so
-          2 
-    ----> 3 x_1 = np.mean(gab)
-          4 x_2 = np.mean(ken)
-          5 s_1_2 = np.var(gab, ddof = 1)
 
 
-    NameError: name 'gab' is not defined
+    -2.490526499355966
+
+
+
+
+```python
+s_p_2 = ((n_1 - 1)*s_1_2 + (n_2 - 1 )* s_2_2)/(n_1 + n_2 -2)
+s_p_2
+```
+
+
+
+
+    71350.4341741627
+
+
+
+
+```python
+print(s_1_2, s_2_2 )
+```
+
+    71654.03676937801 71046.83157894739
 
 
 
@@ -1043,22 +1004,11 @@ ttest_ind(gab, ken, equal_var = False)
 ```
 
 
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-155-2719417799da> in <module>
-          1 from scipy.stats import ttest_ind
-    ----> 2 ttest_ind(gab, ken, equal_var = False)
-    
-
-    NameError: name 'gab' is not defined
 
 
+    Ttest_indResult(statistic=-2.490526499355966, pvalue=0.017243147521256927)
 
-```python
 
-```
 
 ## Example 1
 Next, let's finish working through our coffee shop example...  
