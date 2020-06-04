@@ -158,7 +158,6 @@ $
 
 
 ```python
-#__SOLUTION__
 # Write the hypotheses
 '''
 A drug manufacturer claims that a drug increases memory. It designs an experiment where both control and experimental groups are shown a series of images, and records the number of correct recollections until an error of each group. 
@@ -239,69 +238,6 @@ Predicting the presence of some factor (i.e. counter to the null hypothesis) whe
 
 How does changing our alpha value change the rate of type 1 and type 2 errors?
 
-
-```python
-from scipy import stats
-import numpy as np
-import seaborn as sns
-
-
-fig, ax = plt.subplots()
-
-y = np.linspace(stats.norm(0,1).ppf(0.001),
-             stats.norm(0,1).ppf(0.999), 100)
-
-alpha = stats.norm(0,1).ppf(.95)
-
-
-ax.plot(y, stats.norm(0,1).pdf(y), 'r-', lw=5, alpha=0.6, label='Pink Shade: Type 1 Error')
-ax.axvline(alpha)
-
-px = np.arange(stats.norm(0,1).ppf(0.95), stats.norm(0,1).ppf(.999), .001)
-ax.fill_between(px, stats.norm(0,1).pdf(px), color = 'pink')
-
-ax.set_title('Alpha shaded blue: Type I Error')
-
-
-x = np.linspace(stats.norm(3,1).ppf(0.001),
-             stats.norm(3,1).ppf(0.999), 100)
-
-ax.plot(x, stats.norm(3,1).pdf(x), 'b-', lw=5, alpha=0.6, label='Blue Shade: Type II Error')
-
-
-px = np.arange( stats.norm(0,1).ppf(.5),stats.norm(0,1).ppf(0.95), .001)
-ax.fill_between(px, stats.norm(3,1).pdf(px), color='blue')
-ax.legend(loc='upper right')
-
-ax.set_title('Alpha shaded blue: Type I Error')
-ax.text(1.35, .25, 'Alpha: .5', rotation = 90)
-```
-
-
-
-
-    Text(1.35, 0.25, 'Alpha: .5')
-
-
-
-
-![png](index_files/index_37_1.png)
-
-
-
-```python
-px = np.arange( stats.norm(0,1).ppf(.05),stats.norm(3,1).ppf(0.001), .001)
-px
-```
-
-
-
-
-    array([-1.64485363, -1.64385363, -1.64285363, ..., -0.09285363,
-           -0.09185363, -0.09085363])
-
-
-
 # Z-Tests 
 
 ![z](https://media.giphy.com/media/4oku9cpYuCNwc/giphy.gif)
@@ -332,29 +268,6 @@ Example: Assume the mean height for women in the use is normally distributed wit
 
 
 ```python
-# Code for me:
-
-mccalister = ['Adam', 'Amanda','Chum', 'Dann', 
- 'Jacob', 'Jason', 'Johnhoy', 'Karim', 
-'Leana','Luluva', 'Matt', 'Maximilian', ]
-
-new_choice = np.random.choice(mccalister)
-print(new_choice)
-mccalister.remove(new_choice)
-```
-
-    Luluva
-
-
-
-```python
-# your answer here
-
-```
-
-
-```python
-#__SOLUTION__
 # your answer here
 z_score = (75 - 65)/4
 print(z_score)
@@ -378,65 +291,10 @@ Standard error is the standard deviation of the sampling mean. We will go into t
 
 Once we have a z-stat, we can use a [z-table](http://www.z-table.com/) to find the associated p-value.
 
-
-```python
-import numpy as np
-sample_female_heights = [68, 65, 69, 70, 70, 
-                         61, 59, 65, 64, 66,
-                         72, 71, 68, 66, 64,
-                         65, 65, 70, 71, 63, 
-                         72, 66, 65, 65, 72]
-
-x_bar = np.mean(sample_female_heights)
-mu = 65
-n = len(sample_female_heights)
-std = 4
-
-z = (x_bar - mu)/(4/np.sqrt(n))
-z
-```
-
-
-
-
-    2.3499999999999943
-
-
-
-
-```python
-from scipy import stats
-# we can use stats to calculate the percentile
-print(stats.norm.cdf(z))
-# We can also use the survival function to calculate the probability
-print(stats.norm.sf(z)) 
-# What does the survival function look like to you?
-```
-
-    0.9906132944651613
-    0.009386705534838714
-
-
 # Let's first work through a computational method of hypothesis testing.
 
 
 Let's work with the normal distribution, since it's so useful. Suppose we are told that African elephants have weights distributed normally around a mean of 9000 lbs., with a standard deviation of 900 lbs. Pachyderm Adventures has recently measured the weights of 40 African elephants in Gabon and has calculated their average weight at 8637 lbs. They claim that these statistics on the Gabonese elephants are significant. Let's find out!
-
-
-```python
-# Code for me:
-
-mccalister = ['Adam', 'Amanda','Chum', 'Dann', 
- 'Jacob', 'Jason', 'Johnhoy', 'Karim', 
-'Leana','Luluva', 'Matt', 'Maximilian', ]
-
-new_choice = np.random.choice(mccalister)
-print(new_choice)
-mccalister.remove(new_choice)
-```
-
-    Jason
-
 
 What is our null hypothesis?
 
@@ -444,7 +302,6 @@ What is our null hypothesis?
 
 
 ```python
-#__SOLUTION__
 # The mean weight of Gabonese Elephants is equal to the mean weight of African Elephants
 ```
 
@@ -452,23 +309,11 @@ What is our alternative hypothesis?
 
 
 ```python
-#__SOLUTION__
 # The mean weight of Gabonese Elephants is less than to the mean weight of African Elephants
 ```
 
 
 ```python
-import numpy as np
-np.random.seed(42)
-# So, to computationally simulate a sample, using numpy's random.normal function.
-
-
-
-```
-
-
-```python
-#__SOLUTION__
 # First, generate the numpy array
 np.random.normal(9000, 900, size = 40).mean()
 ```
@@ -482,31 +327,6 @@ np.random.normal(9000, 900, size = 40).mean()
 
 
 ```python
-# We want to take a bunch of these samples, say 1000. 
-
-# From the central limit theorom, we know that the distribution of
-# the means of a random sample will become more normal as the number of samples
-# taken increases.
-
-# So let's take the means of 1000 samples and store them in a list
-
-
-```
-
-
-
-
-    [8973.860881641354,
-     9009.155824283625,
-     8970.390116280525,
-     9059.896989096258,
-     9170.496403788886]
-
-
-
-
-```python
-#__SOLUTION__
 random_means = []
 
 for _ in range(1000):
@@ -526,53 +346,10 @@ random_means[:5]
 
 
 
-
-```python
-import matplotlib.pyplot as plt
-import seaborn as sns
-# let's create the cumulative distribution function for the random sample
-
-rm = sorted(random_means)
-count = 0
-cdf_dict = {rm[0]: count/len(rm)}
-
-for i in range(1, len(rm)):
-    if rm[i] > rm[i-1]:
-        count += 1
-        cdf_dict[rm[i]] = count/len(rm)
-    
-    else:
-        count += 1
-
-        
-plt.plot(list(cdf_dict.keys()), list(cdf_dict.values()))
-plt.title("CDF of mean weights of African Elephants")
-plt.xlabel('Weight (lbs)')
-plt.ylabel('CDF')
-
-plt.plot()
-plt.show();
-```
-
-
-![png](index_files/index_68_0.png)
-
-
-
-```python
-# That looks similar to the cdf of a normal curve.
-```
-
 Now let's count how many times the means from the sample distribution were less than the mean weight of the Gabonese elephants.
 
 
 ```python
-# Code
-```
-
-
-```python
-#__SOLUTION__
 count = 0
 for mean in random_means:
     if mean <= 8637:
@@ -590,70 +367,6 @@ count/len(random_means)
 
 
 ```python
-# That is below our alpha value of .05, so we can reject the null hypothesis!
-```
-
-
-```python
-ax = sns.distplot(random_means)
-plt.axvline(8637)
-plt.text(8575, .0015, 'Gabonese', rotation = 90)
-
-kde_x, kde_y = ax.lines[0].get_data()
-
-ax.fill_between(kde_x, kde_y, where=(kde_x<8637), 
-                interpolate=True, color='red')
-```
-
-
-
-
-    <matplotlib.collections.PolyCollection at 0x1a224ae6d8>
-
-
-
-
-![png](index_files/index_74_1.png)
-
-
-
-```python
-# Let's calculate the standard error, which is how far we expect our estimate to be off on average. (111)
-
-def mse(sample, mean):
-    return None
-
-rmse = np.sqrt(mse(random_means, 9000))
-f"We expect the estimate to be off by {rmse: .2f} lbs on average."
-
-```
-
-
-    ---------------------------------------------------------------------------
-
-    AttributeError                            Traceback (most recent call last)
-
-    AttributeError: 'NoneType' object has no attribute 'sqrt'
-
-    
-    The above exception was the direct cause of the following exception:
-
-
-    TypeError                                 Traceback (most recent call last)
-
-    <ipython-input-151-bb37eca2056d> in <module>
-          4     return None
-          5 
-    ----> 6 rmse = np.sqrt(mse(random_means, 9000))
-          7 f"We expect the estimate to be off by {rmse: .2f} lbs on average."
-
-
-    TypeError: loop of ufunc does not support argument 0 of type NoneType which has no callable sqrt method
-
-
-
-```python
-#__SOLUTION__
 def mse(sample, mean):
     sq_errors = []
 
@@ -670,83 +383,9 @@ f"We expect the estimate to be off by {rmse: .2f} lbs on average."
 Remember we gave the formula for standard error before as $\frac{\sigma}{\sqrt{n}}$
 <br> Let's calculate that with our elephant numbers.
 
-
-```python
-se = 900/np.sqrt(40)
-se
-# pretty close
-```
-
-
-
-
-    142.30249470757707
-
-
-
 Now let's calculate the z-score analytically.
 Remember the formula for z-score:
 $z = \dfrac{{\bar{x}} - \mu_{0}}{\dfrac{\sigma}{\sqrt{n}}}$
-
-
-```python
-x_bar = 8637
-mu = 9000
-se = 142.3
-
-z = (x_bar - mu)/se
-z
-
-
-```
-
-
-
-
-    -2.5509486999297257
-
-
-
-
-```python
-# Looking it up on the z -table ~ .005 
-p = 1 - .005
-p
-```
-
-
-
-
-    0.995
-
-
-
-
-```python
-# or
-from scipy import stats
-stats.norm.cdf(z)
-```
-
-
-
-
-    0.005371506876180296
-
-
-
-
-```python
-# or
-stats.norm.sf(z)
-```
-
-
-
-
-    0.9946284931238197
-
-
 
 # T-Tests
 
@@ -820,141 +459,14 @@ Degrees of freedom = n - 1
 
 We can either look it up (http://www.ttable.org/), or calculate it with python:
 
-
-```python
-from scipy.stats import ttest_1samp
-help(ttest_1samp)
-```
-
-    Help on function ttest_1samp in module scipy.stats.stats:
-    
-    ttest_1samp(a, popmean, axis=0, nan_policy='propagate')
-        Calculate the T-test for the mean of ONE group of scores.
-        
-        This is a two-sided test for the null hypothesis that the expected value
-        (mean) of a sample of independent observations `a` is equal to the given
-        population mean, `popmean`.
-        
-        Parameters
-        ----------
-        a : array_like
-            sample observation
-        popmean : float or array_like
-            expected value in null hypothesis. If array_like, then it must have the
-            same shape as `a` excluding the axis dimension
-        axis : int or None, optional
-            Axis along which to compute test. If None, compute over the whole
-            array `a`.
-        nan_policy : {'propagate', 'raise', 'omit'}, optional
-            Defines how to handle when input contains nan. 'propagate' returns nan,
-            'raise' throws an error, 'omit' performs the calculations ignoring nan
-            values. Default is 'propagate'.
-        
-        Returns
-        -------
-        statistic : float or array
-            t-statistic
-        pvalue : float or array
-            two-tailed p-value
-        
-        Examples
-        --------
-        >>> from scipy import stats
-        
-        >>> np.random.seed(7654567)  # fix seed to get the same result
-        >>> rvs = stats.norm.rvs(loc=5, scale=10, size=(50,2))
-        
-        Test if mean of random sample is equal to true mean, and different mean.
-        We reject the null hypothesis in the second case and don't reject it in
-        the first case.
-        
-        >>> stats.ttest_1samp(rvs,5.0)
-        (array([-0.68014479, -0.04323899]), array([ 0.49961383,  0.96568674]))
-        >>> stats.ttest_1samp(rvs,0.0)
-        (array([ 2.77025808,  4.11038784]), array([ 0.00789095,  0.00014999]))
-        
-        Examples using axis and non-scalar dimension for population mean.
-        
-        >>> stats.ttest_1samp(rvs,[5.0,0.0])
-        (array([-0.68014479,  4.11038784]), array([  4.99613833e-01,   1.49986458e-04]))
-        >>> stats.ttest_1samp(rvs.T,[5.0,0.0],axis=1)
-        (array([-0.68014479,  4.11038784]), array([  4.99613833e-01,   1.49986458e-04]))
-        >>> stats.ttest_1samp(rvs,[[5.0],[0.0]])
-        (array([[-0.68014479, -0.04323899],
-               [ 2.77025808,  4.11038784]]), array([[  4.99613833e-01,   9.65686743e-01],
-               [  7.89094663e-03,   1.49986458e-04]]))
-    
-
-
 Let's go back to our Gabonese elephants, but let's reduce the sample size to 20, and assume we don't know the standard deviation of the population, but know the sample standard deviation to be ~355 lbs.
 
 Here is the new scenario: suppose we are told that African elephants have weights distributed normally around a mean of 9000 lbs. Pachyderm Adventures has recently measured the weights of 20 African elephants in Gabon and has calculated their average weight at 8637 lbs. They claim that these statistics on the Gabonese elephants are significant. Let's find out!
 
 Because the sample size is smaller, we will use a one sample t-test.
 
-
-```python
-# here is the array of our weights
-gab = [8000, 8500, 8787, 9005, 8101, 
-8891, 7999, 9005, 8302, 8505, 
-8787, 8383, 9090, 8440, 9200, 
-8890, 8765, 9005, 8674, 8409]
-print(np.std(gab))
-print(np.mean(gab))
-
-```
-
-    355.2156950361287
-    8636.9
-
-
-
-```python
-# Let's continue to assume our alpha is .05
-x_bar = 8637
-mu = 9000
-sample_std = 355
-n = 20
-
-t_stat = (x_bar - mu)/(sample_std/np.sqrt(n))
-t_stat
-```
-
-
-
-
-    -4.57291648356295
-
-
-
-
-```python
-# Calculate our t-critical value
-stats.t.ppf(.05, 19)
-```
-
-
-
-
-    -1.7291328115213678
-
-
-
 Now, let's use the t-table to find our critical t-value.
 t-critical = -1.729
-
-
-
-```python
-# Using Python:
-ttest_1samp(gab, 9000)
-```
-
-
-
-
-    Ttest_1sampResult(statistic=-4.455648296279936, pvalue=0.0002711592272563807)
-
 
 
 So, yes, we can very confidently reject our null.
@@ -990,76 +502,6 @@ An independent two-sample t-test for samples of size $n_1$ and $n_2$ has $(n_1 +
 
 Now let's say we want to compare our Gabonese elephants to a sample of elephants from Kenya. 
 
-
-```python
-ken = [9101, 8510, 8787, 9005, 8101, 
-9100, 7900, 9005, 8302, 8505, 
-9200, 8383, 9090, 8440, 9110, 
-9300, 9200, 8901, 8701, 9308]
-print(np.mean(ken))
-print(np.std(ken))
-```
-
-    8797.45
-    407.0733932597413
-
-
-
-```python
-# so
-
-x_1 = np.mean(gab)
-x_2 = np.mean(ken)
-s_1_2 = np.var(gab, ddof = 1)
-s_2_2 = np.var(ken, ddof = 1)
-n_1 = len(gab)
-n_2 = len(ken)
-s_p_2 = ((n_1 - 1)*s_1_2 + (n_2 - 1 )* s_2_2)/(n_1 + n_2 -2)
-
-t = (x_1 - x_2)/np.sqrt(s_p_2*(1/n_1 + 1/n_2))
-t
-```
-
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-154-086847d76736> in <module>
-          1 # so
-          2 
-    ----> 3 x_1 = np.mean(gab)
-          4 x_2 = np.mean(ken)
-          5 s_1_2 = np.var(gab, ddof = 1)
-
-
-    NameError: name 'gab' is not defined
-
-
-
-```python
-from scipy.stats import ttest_ind
-ttest_ind(gab, ken, equal_var = False)
-```
-
-
-    ---------------------------------------------------------------------------
-
-    NameError                                 Traceback (most recent call last)
-
-    <ipython-input-155-2719417799da> in <module>
-          1 from scipy.stats import ttest_ind
-    ----> 2 ttest_ind(gab, ken, equal_var = False)
-    
-
-    NameError: name 'gab' is not defined
-
-
-
-```python
-
-```
-
 ## Example 1
 Next, let's finish working through our coffee shop example...  
 
@@ -1067,24 +509,13 @@ A coffee shop relocates from Manhattan to Brooklyn and wants to make sure that a
 
 State null and alternative hypothesis
 
-
-```python
-# Your Answer Here
-```
-
 What kind of test? 
-
-
-```python
-# Your answer here
-```
 
 Run the test_
 
 
 
 ```python
-#__SOLUTION__
 '''
 State null and alternative hypothesis
 1. Null: the amount of espresso in the lattes is the same as before the move.
@@ -1101,7 +532,6 @@ What kind of test?
 
 
 ```python
-#__SOLUTION__
 x_bar = 4.6 
 mu = 4 
 s = 0.22 
@@ -1119,7 +549,6 @@ print("The t-statistic for our sample is {}.".format(round(t, 2)))
 
 
 ```python
-#__SOLUTION__
 # critical t-statistic values
 stats.t.ppf(0.005, df), stats.t.ppf(1-0.005, df)
 ```
@@ -1137,7 +566,6 @@ Can we reject the null hypothesis?
 
 
 ```python
-#__SOLUTION__
 '''
 > Yes. t > |t_critical|. we can reject the null hypothesis in favor of the alternative at $\alpha = 0.01$. 
 '''
@@ -1163,35 +591,14 @@ Should I go just to one store for a less expensive pair of jeans? I'm pretty app
 
 **State the null and alternative hypotheses**
 
-
-```python
-
-```
-
 **What kind of test should we run? Why?** 
 
-
-```python
-
-```
-
 **Perform the test.**
-
-
-```python
-
-```
 
 **Make decision.**
 
 
 ```python
-
-```
-
-
-```python
-#__SOLUTION__
 '''
 > Null: Store A and B have the same jean prices. 
 
@@ -1230,21 +637,10 @@ delivery_times_B = [26.4, 26.3, 27.4, 30.4, 25.1, 28.4, 23.3, 24.7, 31.8, 24.3]
 
 State null and alternative hypothesis. What type of test should we perform? 
 
-
-```python
-
-```
-
 Run the test and make a decision
 
 
 ```python
-
-```
-
-
-```python
-#__SOLUTION__
 '''
 > Null hypothesis: The delivery times for restaurants in neighborhood A are equal to delivery times for restaurants in neighborhood B. 
 
@@ -1277,12 +673,6 @@ Null hypothesis:
 Alternative hypothesis:
 
 
-
-```python
-# one-sample z-test 
-
-```
-
 Reject?:
 
 Consider the gain in weight (in grams) of 19 female rats between 28 and 84 days after birth. 
@@ -1306,11 +696,6 @@ What kind of test should we perform and why?
 
 > Test:
 
-
-```python
-
-```
-
 We fail to reject the null hypothesis at a significance level of $\alpha = 0.05$. 
 
 **What if we wanted to test if the rats who ate a high protein diet gained more weight than those who ate a low-protein diet?**
@@ -1322,11 +707,6 @@ alternative:
 Kind of test? 
 
 Critical test statistic value? 
-
-
-```python
-
-```
 
 Can we reject?
 
