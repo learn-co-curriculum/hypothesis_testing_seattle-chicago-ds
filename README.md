@@ -31,17 +31,6 @@ stars?
 4. Create a model of the situation Assuming the Null Hypothesis is True!
 5. Decide how surprised you would need to be in order to change your mind
 
-## Definitions
-
-**What is statistical hypothesis testing?**
-
-When we perform experiments, we typically do not have access to all the members of a population, and need to take **samples** of measurements to make inferences about the population. 
-
-A statistical hypothesis test is a method for testing a hypothesis about a parameter in a population using data measured in a sample. 
-
-We test a hypothesis by determining the chance of obtaining a sample statistic if the null hypothesis regarding the population parameter is true. 
-
-
 **Intuition** 
 
 Suppose you have a large dataset for a population. The data is normally distributed with mean 0 and standard deviation 1.
@@ -97,17 +86,17 @@ If we're testing whether Peeps cause dementia, then the null hypothesis will say
 
 ## Two Tail Hypothesis
 
-$\Large H_0: \mu_s - \mu_p = 0  $  
-$\Large H_1: \mu_s - \mu_p \neq 0  $
+$\Large H_0: \bar{x} - \mu_p = 0  $  
+$\Large H_1: \bar{x} - \mu_p \neq 0  $
     
 ## Left Tail Hypothesis
 
-$\Large H_0: \mu_s < \mu_p  $  
-$\Large H_1: \mu_s >= \mu_p  $
+$\Large H_0: \bar{x} >= \mu_p  $  
+$\Large H_1: \bar{x} < \mu_p  $
     
 ## Right Tail Hypothesis
-$\Large H_0: \mu_s > \mu_p  $  
-$\Large H_1: \mu_s <= \mu_p  $
+$\Large H_0: \bar{x} <= \mu_p  $  
+$\Large H_1: \bar{x} > \mu_p  $
 
 # Write the hypotheses
 
@@ -175,7 +164,7 @@ How does changing our alpha value change the rate of type 1 and type 2 errors?
 from scipy import stats
 import numpy as np
 import seaborn as sns
-
+import matplotlib.pyplot as plt
 
 fig, ax = plt.subplots()
 
@@ -216,7 +205,7 @@ ax.text(1.35, .25, 'Alpha: .5', rotation = 90)
 
 
 
-![png](index_files/index_36_1.png)
+![png](index_files/index_34_1.png)
 
 
 
@@ -341,7 +330,7 @@ print(new_choice)
 mccalister.remove(new_choice)
 ```
 
-    Dann
+    Chum
 
 
 What is our null hypothesis?
@@ -349,6 +338,18 @@ What is our null hypothesis?
 >
 
 What is our alternative hypothesis?
+
+
+```python
+
+```
+
+What is our alpha?
+
+
+```python
+
+```
 
 
 ```python
@@ -402,7 +403,19 @@ plt.show();
 ```
 
 
-![png](index_files/index_61_0.png)
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-47-32b365f0ab28> in <module>
+          3 # let's create the cumulative distribution function for the random sample
+          4 
+    ----> 5 rm = sorted(random_means)
+          6 count = 0
+          7 cdf_dict = {rm[0]: count/len(rm)}
+
+
+    NameError: name 'random_means' is not defined
 
 
 
@@ -435,14 +448,19 @@ ax.fill_between(kde_x, kde_y, where=(kde_x<8637),
 ```
 
 
+    ---------------------------------------------------------------------------
+
+    NameError                                 Traceback (most recent call last)
+
+    <ipython-input-51-852a18a78bde> in <module>
+    ----> 1 ax = sns.distplot(random_means)
+          2 plt.axvline(8637)
+          3 plt.text(8575, .0015, 'Gabonese', rotation = 90)
+          4 
+          5 kde_x, kde_y = ax.lines[0].get_data()
 
 
-    <matplotlib.collections.PolyCollection at 0x1a1ea7b278>
-
-
-
-
-![png](index_files/index_66_1.png)
+    NameError: name 'random_means' is not defined
 
 
 
@@ -460,24 +478,16 @@ f"We expect the estimate to be off by {rmse: .2f} lbs on average."
 
     ---------------------------------------------------------------------------
 
-    AttributeError                            Traceback (most recent call last)
+    NameError                                 Traceback (most recent call last)
 
-    AttributeError: 'NoneType' object has no attribute 'sqrt'
-
-    
-    The above exception was the direct cause of the following exception:
-
-
-    TypeError                                 Traceback (most recent call last)
-
-    <ipython-input-83-bb37eca2056d> in <module>
+    <ipython-input-52-bb37eca2056d> in <module>
           4     return None
           5 
     ----> 6 rmse = np.sqrt(mse(random_means, 9000))
           7 f"We expect the estimate to be off by {rmse: .2f} lbs on average."
 
 
-    TypeError: loop of ufunc does not support argument 0 of type NoneType which has no callable sqrt method
+    NameError: name 'random_means' is not defined
 
 
 Remember we gave the formula for standard error before as $\frac{\sigma}{\sqrt{n}}$
@@ -759,7 +769,7 @@ ttest_1samp(gab, 9000)
 
 
 
-    Ttest_1sampResult(statistic=-7.372279171061301, pvalue=5.518287796649883e-07)
+    Ttest_1sampResult(statistic=-5.561280082962362, pvalue=2.3056480504505848e-05)
 
 
 
@@ -810,7 +820,7 @@ print(np.std(gab))
 ```
 
     259.79701691897856
-    260.90483884150007
+    332.1805854072912
 
 
 
@@ -832,7 +842,7 @@ t
 
 
 
-    -2.490526499355966
+    -1.9939807407544714
 
 
 
@@ -845,7 +855,7 @@ s_p_2
 
 
 
-    71350.4341741627
+    93599.17437975299
 
 
 
@@ -854,7 +864,7 @@ s_p_2
 print(s_1_2, s_2_2 )
 ```
 
-    71654.03676937801 71046.83157894739
+    116151.51718055859 71046.83157894739
 
 
 
@@ -866,7 +876,7 @@ ttest_ind(gab, ken, equal_var = False)
 
 
 
-    Ttest_indResult(statistic=-2.490526499355966, pvalue=0.017243147521256927)
+    Ttest_indResult(statistic=-1.9939807407544716, pvalue=0.053789633153077526)
 
 
 
