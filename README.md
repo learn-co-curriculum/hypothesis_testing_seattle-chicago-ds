@@ -41,8 +41,6 @@ A statistical hypothesis test is a method for testing a hypothesis about a param
 
 We test a hypothesis by determining the chance of obtaining a sample statistic if the null hypothesis regarding the population parameter is true. 
 
-> The goal of hypothesis testing is to make a decision about the value of a population parameter based on sample data.
-
 
 **Intuition** 
 
@@ -99,21 +97,21 @@ If we're testing whether Peeps cause dementia, then the null hypothesis will say
 
 ## Two Tail Hypothesis
 
-$\Large H_0: \mu_1 - \mu_2 = 0  $  
-$\Large H_1: \mu_1 - \mu_2 \neq 0  $
+$\Large H_0: \mu_s - \mu_p = 0  $  
+$\Large H_1: \mu_s - \mu_p \neq 0  $
     
 ## Left Tail Hypothesis
 
-$\Large H_0: \mu_1 < \mu_2  $  
-$\Large H_1: \mu_1 >= \mu_2  $
+$\Large H_0: \mu_s < \mu_p  $  
+$\Large H_1: \mu_s >= \mu_p  $
     
 ## Right Tail Hypothesis
-$\Large H_0: \mu_1 > \mu_2  $  
-$\Large H_1: \mu_1 <= \mu_2  $
+$\Large H_0: \mu_s > \mu_p  $  
+$\Large H_1: \mu_s <= \mu_p  $
 
 # Write the hypotheses
 
-1. A drug manufacturer claims that a drug increases memory. It designs an experiment where both control and experimental groups are shown a series of images, and records the number of correct recollections until an error of each group. 
+1. A drug manufacturer claims that a drug increases memory. It designs an experiment where both control and experimental groups are shown a series of images, and records the number of correct recollections until an error is made for each group. 
 
 Answer  
 $
@@ -137,55 +135,6 @@ $
 
 Answer  
 $
-
-
-```python
-#__SOLUTION__
-# Write the hypotheses
-'''
-A drug manufacturer claims that a drug increases memory. It designs an experiment where both control and experimental groups are shown a series of images, and records the number of correct recollections until an error of each group. 
-
-Null = The mean number of recollections of the control group is greater than or equal to the mean number of guesses of the control group.
-Alternative = The mean number of incorrect guesses of the experimental group is greater than the mean number of incorrect guesses of the control group.
-'''
-'''
-
-An online toystore claims that putting a 5 minute timer on the checkout page of it website decreases conversion rate. It sets up two versions of its site, one with a timer and one with no timer. 
-
-Null = The conversion rate for the timer site is greater than or equal to the conversion rate of the no-timer site
-Alternative = The conversion rate for the timer site is less than the conversion rate of the no-timer site
-'''
-'''
-
-The Kansas City public school system wants to test whether the scores of students who take standardized tests under the supervision of teachers differ from the scores of students who take them in rooms with school administrators.
-
-Null = The scores of students supervised by administrators and students are equal
-Alternative = The scores of students supervised by teachers are not equal to the scores of students supervised by administrators.
-'''
-'''
-
-A pest control company believes that the length of cockroach legs in colonies which have persisted after two or more insecticide treatements are longer than those in which have not been treated to insecticide.
-
-Null = Mean cockroach leg length in both categories of treatment are the same.
-Alternative = Mean cockroach leg length in buildings that were treated two or more times are greater than the mean cockroach length of buildings with no treatment.
-'''
-'''
-
-A healthcare company believes patients between the ages of 18 and 25 participate in annual checkups less than all other age groups.
-
-Null = Patients between the age 18 and 25 and all other age group participate in the same amount of annual checkups.  
-Alternative = Patients between the age of 18 and 25 participate in less annual checkups than all other age groups.
-
-'''
-
-```
-
-
-
-
-    '\n\nA healthcare company believes patients between the ages of 18 and 25 participate in annual checkups less than all other age groups.\n\nNull = Patients between the age 18 and 25 and all other age group participate in the same amount of annual checkups.  \nAlternative = Patients between the age of 18 and 25 participate in less annual checkups than all other age groups.\n\n'
-
-
 
 # 3. Define p-value, alpha, type I/II errors
 
@@ -267,7 +216,7 @@ ax.text(1.35, .25, 'Alpha: .5', rotation = 90)
 
 
 
-![png](index_files/index_37_1.png)
+![png](index_files/index_36_1.png)
 
 
 
@@ -399,19 +348,7 @@ What is our null hypothesis?
 
 >
 
-
-```python
-#__SOLUTION__
-# The mean weight of Gabonese Elephants is equal to the mean weight of African Elephants
-```
-
 What is our alternative hypothesis?
-
-
-```python
-#__SOLUTION__
-# The mean weight of Gabonese Elephants is less than to the mean weight of African Elephants
-```
 
 
 ```python
@@ -425,20 +362,6 @@ np.random.seed(42)
 
 
 ```python
-#__SOLUTION__
-# First, generate the numpy array
-np.random.normal(9000, 900, size = 40).mean()
-```
-
-
-
-
-    8803.226845423855
-
-
-
-
-```python
 # We want to take a bunch of these samples, say 1000. 
 
 # From the central limit theorom, we know that the distribution of
@@ -449,28 +372,6 @@ np.random.normal(9000, 900, size = 40).mean()
 
 
 ```
-
-
-```python
-#__SOLUTION__
-random_means = []
-
-for _ in range(1000):
-    random_means.append(np.random.normal(9000, 900, size = 40).mean())
-
-random_means[:5]
-```
-
-
-
-
-    [8973.860881641354,
-     9009.155824283625,
-     8970.390116280525,
-     9059.896989096258,
-     9170.496403788886]
-
-
 
 
 ```python
@@ -501,7 +402,7 @@ plt.show();
 ```
 
 
-![png](index_files/index_66_0.png)
+![png](index_files/index_61_0.png)
 
 
 
@@ -515,24 +416,6 @@ Now let's count how many times the means from the sample distribution were less 
 ```python
 # Code
 ```
-
-
-```python
-#__SOLUTION__
-count = 0
-for mean in random_means:
-    if mean <= 8637:
-        count += 1
-        
-count/len(random_means)
-```
-
-
-
-
-    0.009
-
-
 
 
 ```python
@@ -559,7 +442,7 @@ ax.fill_between(kde_x, kde_y, where=(kde_x<8637),
 
 
 
-![png](index_files/index_72_1.png)
+![png](index_files/index_66_1.png)
 
 
 
@@ -595,29 +478,6 @@ f"We expect the estimate to be off by {rmse: .2f} lbs on average."
 
 
     TypeError: loop of ufunc does not support argument 0 of type NoneType which has no callable sqrt method
-
-
-
-```python
-#__SOLUTION__
-def mse(sample, mean):
-    sq_errors = []
-
-    for sample_mean in sample:
-        sq_errors.append((sample_mean - mean)**2)
-
-    return sum(sq_errors)/len(sample)
-
-rmse = np.sqrt(mse(random_means, 9000))
-f"We expect the estimate to be off by {rmse: .2f} lbs on average."
-
-```
-
-
-
-
-    'We expect the estimate to be off by  141.34 lbs on average.'
-
 
 
 Remember we gave the formula for standard error before as $\frac{\sigma}{\sqrt{n}}$
@@ -1032,71 +892,7 @@ What kind of test?
 Run the test_
 
 
-
-```python
-#__SOLUTION__
-'''
-State null and alternative hypothesis
-1. Null: the amount of espresso in the lattes is the same as before the move.
-2. Alternative: the amount of espresso in the lattes is different before and after the move. 
-
-What kind of test? 
-
-* two-tailed one-sample t-test
-    * small sample size
-    * unknown population standard deviation 
-    * two-tailed because we want to know if amounts are same or different 
-'''
-```
-
-
-```python
-#__SOLUTION__
-x_bar = 4.6 
-mu = 4 
-s = 0.22 
-n = 25 
-
-df = n-1
-
-t = (x_bar - mu)/(s/n**0.5)
-print("The t-statistic for our sample is {}.".format(round(t, 2)))
-
-```
-
-    The t-statistic for our sample is 13.64.
-
-
-
-```python
-#__SOLUTION__
-# critical t-statistic values
-stats.t.ppf(0.005, df), stats.t.ppf(1-0.005, df)
-```
-
-
-
-
-    (-2.796939504772805, 2.796939504772804)
-
-
-
 Can we reject the null hypothesis? 
-
-
-
-
-```python
-#__SOLUTION__
-'''
-> Yes. t > |t_critical|. we can reject the null hypothesis in favor of the alternative at $\alpha = 0.01$. 
-'''
-```
-
-
-
-
-    '\n> Yes. t > |t_critical|. we can reject the null hypothesis in favor of the alternative at $\x07lpha = 0.01$. \n'
 
 
 
@@ -1139,32 +935,6 @@ Should I go just to one store for a less expensive pair of jeans? I'm pretty app
 
 ```
 
-
-```python
-#__SOLUTION__
-'''
-> Null: Store A and B have the same jean prices. 
-
-> Alternative: Store A and B do not have the same jean prices. 
-
-**What kind of test should we run? Why?** 
-> Run a two-tailed two independent sample t-test. Sample sizes are small. 
-
-store1 = [20,30,30,50,75,25,30,30,40,80]
-store2 = [60,30,70,90,60,40,70,40]
-**Perform the test.**
-'''
-'''
-stats.ttest_ind(store1, store2)
-'''
-
-'''
-**Make decision.**
-> We fail to reject the null hypothesis at a significance level of $\alpha = 0.1$. We do not have evidence to support that jean prices are different in store A and store B. 
-'''
-
-```
-
 > We fail to reject the null hypothesis at a significance level of $\alpha = 0.1$. We do not have evidence to support that jean prices are different in store A and store B. 
 
 ## Example 3 
@@ -1191,32 +961,6 @@ Run the test and make a decision
 ```python
 
 ```
-
-
-```python
-#__SOLUTION__
-'''
-> Null hypothesis: The delivery times for restaurants in neighborhood A are equal to delivery times for restaurants in neighborhood B. 
-
-> Alternative hypothesis: Delivery times for restaurants in neighborhood A are not equal to delivery times for restaurants in neighborhood B. 
-
-> Two-sided unpaired two-sample t-test
-'''
-
-delivery_times_A = [28.4, 23.3, 30.4, 28.1, 29.4, 30.6, 27.8, 30.9, 27.0, 32.8]
-delivery_times_B = [26.4, 26.3, 27.4, 30.4, 25.1, 28.4, 23.3, 24.7, 31.8, 24.3]
-stats.ttest_ind(delivery_times_A, delivery_times_B)
-'''
-> We cannot reject the null hypothesis that restaurant A and B have equal delivery times. p-value > $\alpha$. 
-'''
-```
-
-
-
-
-    '\n> We cannot reject the null hypothesis that restaurant A and B have equal delivery times. p-value > $\x07lpha$. \n'
-
-
 
 # Level Up: More practice problems!
 
